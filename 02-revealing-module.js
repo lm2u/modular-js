@@ -2,11 +2,11 @@ const people = (function(){
   let people = ["Test"];
   
   //Cache DOM
-  wrapper = document.getElementById("peopleModule");
-  input = wrapper.querySelector("input");
-  btn = wrapper.querySelector("button");
-  ul = wrapper.querySelector("ul");
-  template = `
+  const wrapper = document.getElementById("peopleModule");
+  const input = wrapper.querySelector("input");
+  const btn = wrapper.querySelector("button");
+  const ul = wrapper.querySelector("ul");
+  const template = `
   <li>
     <span>{{name}}</span>
     <i class="del">X</i>
@@ -30,19 +30,20 @@ const people = (function(){
   };
 
   function addPerson(value){
-    isInputEmpty = (!input.value);
-    isString = (typeof value === "string")
+    const isInputEmpty = (!input.value);
+    const isString = (typeof value === "string")
     // isPointerEvent = (value instanceof PointerEvent)
 
     if(isInputEmpty){
       // console.log(value)
-      if(isString){
-        people.push(value)
+      if(isString && (value != "")){
+        addPersonToList(value)
         render();
       }
       return;
     }
-    people.push(input.value || value);
+    addPersonToList(input.value)
+    // people.push(input.value || value);
     render();
   };
 
@@ -58,6 +59,10 @@ const people = (function(){
     people.splice(index, 1)
     render()
   };
+
+  function addPersonToList(person){
+    people.push(person)
+  }
 
   return {addPerson, deletePerson}
 })()
