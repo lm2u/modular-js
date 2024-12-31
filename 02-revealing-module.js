@@ -35,7 +35,7 @@ const people = (function(){
     // isPointerEvent = (value instanceof PointerEvent)
 
     if(isInputEmpty){
-      console.log(value)
+      // console.log(value)
       if(isString){
         people.push(value)
         render();
@@ -47,13 +47,16 @@ const people = (function(){
   };
 
   function deletePerson(e){
-    if (e.target.matches("i.del")){
+    let index;
+    if (typeof e === "number"){
+      index = e
+    }else{
       const li = event.target.closest("li");
       const siblings = Array.from(li.parentNode.children);
-      const index = siblings.indexOf(li)
-      people.splice(index, 1);
-      render();
+      index = siblings.indexOf(li)
     }
+    people.splice(index, 1)
+    render()
   };
 
   return {addPerson, deletePerson}
