@@ -19,6 +19,9 @@ const people = (function(){
 
   render();
     
+  // events.on('peopleChanged',function(count){
+  //   alert(count);
+  // });
   function render() {
     input.value = "";
     ul.innerHTML = "";
@@ -27,6 +30,9 @@ const people = (function(){
       const renderedHTML = template.replace("{{name}}", person);
       ul.insertAdjacentHTML("beforeend", renderedHTML);
     });
+
+    // stats.setPeople(people.length)
+    PubSub.subscribe('peopleChanged', people.length)
   };
 
   function addPerson(value){
