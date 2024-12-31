@@ -1,5 +1,5 @@
 const people = {
-  people: [],
+  people: ['test'],
   init: function() {
     this.cacheDom();
     this.bindEvents();
@@ -20,25 +20,29 @@ const people = {
   bindEvents: function(){
     //context of 'this' changes according to where it's fired (the button) 
     //bind it again to make sure it refers to people context
-    this.btn.addEventListener("click", this.addPerson.bind(this));
-    this.ul.addEventListener("click", this.deletePerson.bind(this));
+    this.btn.addEventListener("click", ()=>this.addPerson());
+    this.ul.addEventListener("click", (e)=>this.deletePerson(e));
     
   },
 
   render: function() {
+    this.input.value = "";
     let data = {
       people: this.people,
     }
-    if(data.people.length===0) return    
     this.ul.innerHTML = "";
+    if(data.people.length===0) return    
     this.people.forEach((person)=>{
       const renderedHTML = this.template.replace("{{name}}", person);
       this.ul.insertAdjacentHTML("beforeend", renderedHTML);
     });
   },
 
-  addPerson: function(){
-    this.people.push(this.input.value);
+  addPerson: function(value){
+    if (!this.input.value && !value) {
+      return;
+    }
+    this.people.push(this.input.value || value);
     this.render();
   },
 
